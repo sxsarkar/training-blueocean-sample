@@ -1,19 +1,15 @@
 pipeline {
   agent {
-    node {
-      label 'Backend'
+    docker {
+      image 'bitwiseman/training-blueocean-sample'
+      args '-u root -v $HOME/.m2:/root/.m2'
     }
     
   }
   stages {
-    stage('error') {
-      steps {
-        sh 'echo Hello Jenkins!'
-      }
-    }
     stage('Build') {
       steps {
-        sh 'mvn -B'
+        sh './jenkins/build.sh'
       }
     }
     stage('Test') {
