@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        sh 'sh \'echo Hello Jenkins!\''
+        sh 'echo Hello Jenkins!'
       }
     }
   }
