@@ -1,8 +1,7 @@
 pipeline {
   agent {
-    docker {
-      image 'maven:3-alpine'
-      args '-v $HOME/.m2:/root/.m2'
+    node {
+      label 'Backend'
     }
     
   }
@@ -15,6 +14,28 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn -B'
+      }
+    }
+    stage('Test') {
+      steps {
+        parallel(
+          "Backend": {
+            sh './gradlew check'
+            
+          },
+          "Frontend": {
+            sh './gradlew check'
+            
+          },
+          "Performance": {
+            sh './gradlew check'
+            
+          },
+          "Static": {
+            sh './gradlew check'
+            
+          }
+        )
       }
     }
   }
